@@ -4,10 +4,12 @@ import {
    View,
    Text,
    Button,
+   ScrollView,
    TouchableWithoutFeedback,
    Keyboard,
    Alert,
-   Dimensions
+   Dimensions,
+   KeyboardAvoidingView
 } from 'react-native';
 
 import Card from '../components/Card';
@@ -77,38 +79,42 @@ const StartGameScreen = props => {
    }
 
    return (
-      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-         <View style={styles.screen}>
-            <TitleText style={styles.title}>Start a New Game!</TitleText>
-            <Card style={styles.inputContainer}>
-               <BodyText>Select a number!</BodyText>
-               <Input
-                  style={styles.userInput}
-                  blurOnSubmit
-                  autoCapitalize='none'
-                  autoCorrect={false}
-                  keyboardType='number-pad'
-                  maxLength={2}
-                  onChangeText={inputTracker}
-                  value={userInput} />
-               <View style={styles.buttonContainer}>
-                  <View style={styles.button}>
-                     <Button
-                        title="RESET"
-                        onPress={resetInput}
-                        color={Colors.primary} />
-                  </View>
-                  <View style={styles.button}>
-                     <Button
-                        title="CONFIRM"
-                        onPress={confirmInput}
-                        color={Colors.primary} />
-                  </View>
+      <ScrollView>
+         <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={30}>
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+               <View style={styles.screen}>
+                  <TitleText style={styles.title}>Start a New Game!</TitleText>
+                  <Card style={styles.inputContainer}>
+                     <BodyText>Select a number!</BodyText>
+                     <Input
+                        style={styles.userInput}
+                        blurOnSubmit
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        keyboardType='number-pad'
+                        maxLength={2}
+                        onChangeText={inputTracker}
+                        value={userInput} />
+                     <View style={styles.buttonContainer}>
+                        <View style={styles.button}>
+                           <Button
+                              title="RESET"
+                              onPress={resetInput}
+                              color={Colors.primary} />
+                        </View>
+                        <View style={styles.button}>
+                           <Button
+                              title="CONFIRM"
+                              onPress={confirmInput}
+                              color={Colors.primary} />
+                        </View>
+                     </View>
+                  </Card>
+                  {confirmedOutput}
                </View>
-            </Card>
-            {confirmedOutput}
-         </View>
-      </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback>
+         </KeyboardAvoidingView>
+      </ScrollView>
    );
 };
 

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { StyleSheet, View, Alert, ScrollView } from 'react-native';
+import { StyleSheet, View, Alert, ScrollView, Dimensions } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import Card from '../components/Card';
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
    },
    numberContainer: {
       alignItems: "center",
-      marginBottom: '5%'
+      marginBottom: Dimensions.get('window').height > 600 ? 20 : 10
    },
    buttonContainer: {
       flexDirection: 'row',
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       marginVertical: 5,
-      width: '60%'
+      width: Dimensions.get('window').width > 350 ? '60%' : '80%'
    },
    historyText: {
       color: '#FFFFFF'
