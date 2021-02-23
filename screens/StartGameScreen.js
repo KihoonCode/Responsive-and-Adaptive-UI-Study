@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
    StyleSheet,
    View,
@@ -29,6 +29,19 @@ const StartGameScreen = props => {
 
    // whether user's chosen input is valid
    const [confirmed, setConfirmed] = useState(false);
+
+   const [buttonSize, setButtonSize] = useState(Dimensions.get('window').width / 4);
+
+   useEffect(() => {
+      const updateLayout = () => {
+         setButtonSize(Dimensions.get('window').width / 4);
+      };
+      
+      Dimensions.addEventListener('change', updateLayout);
+      return () => {
+         Dimensions.removeEventListener('change', updateLayout);
+      }
+   });
 
    /*
    * inputTracker keeps tracks of input that user is typing.
@@ -96,13 +109,13 @@ const StartGameScreen = props => {
                         onChangeText={inputTracker}
                         value={userInput} />
                      <View style={styles.buttonContainer}>
-                        <View style={styles.button}>
+                        <View style={{width: buttonSize}}>
                            <Button
                               title="RESET"
                               onPress={resetInput}
                               color={Colors.primary} />
                         </View>
-                        <View style={styles.button}>
+                        <View style={{width: buttonSize}}>
                            <Button
                               title="CONFIRM"
                               onPress={confirmInput}
@@ -146,9 +159,6 @@ const styles = StyleSheet.create({
       justifyContent: 'space-between',
       width: '100%',
       paddingHorizontal: 20
-   },
-   button: {
-      width: Dimensions.get('window').width / 4
    },
    confirmedOutput: {
       marginVertical: '7%',
