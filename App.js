@@ -6,7 +6,7 @@ import AppLoading from 'expo-app-loading';
 import Header from './components/Header';
 import StartGameScreen from './screens/StartGameScreen';
 import GameScreen from './screens/GameScreen';
-import GameOverScreen from './screens/GameOverScreelsn';
+import GameOverScreen from './screens/GameOverScreen';
 
 const fetchFonts = () => {
    return Font.loadAsync({
