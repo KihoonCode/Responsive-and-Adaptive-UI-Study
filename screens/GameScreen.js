@@ -42,6 +42,10 @@ const GameScreen = props => {
    const [currGuess, setCurrGuess] = useState(initialGuess);
    // past guesses of computer
    const [pastGuesses, setPastGuesses] = useState([initialGuess]);
+   // currently availiable width
+   const [availableWidth, setAvailableWidth] = useState(Dimensions.get('window').width);
+   // currently availiable height
+   const [availableHeight, setAvailableHeight] = useState(Dimensions.get('window').height);
    // current game's maximum number
    const currHigh = useRef(100);
    // current game's minimum number
@@ -54,6 +58,18 @@ const GameScreen = props => {
          endGame(pastGuesses.length);
       }
    }, [currGuess, userGuess, endGame]);
+
+   useEffect(() => {
+      const updateLayout = () => {
+         setAvailableWidth(Dimensions.get('window').width);
+         setAvailableHeight(Dimensions.get('window').height);
+      };
+      
+      Dimensions.addEventListener('change', updateLayout);
+      return () => {
+         Dimensions.removeEventListener('change', updateLayout);
+      }
+   });
 
    /**
     * Generates a new random value based on whether current guess is lower or greater.
@@ -76,6 +92,31 @@ const GameScreen = props => {
       setCurrGuess(nextGuess);
       setPastGuesses(curr => [nextGuess, ...curr]);
    };
+
+   if (availableHeight < 500) {
+      return (
+         <View style={styles.screen}>
+            <View>
+               <MainButton onPress={() => generateNextGuess('lower')}>
+                  <Ionicons name="md-remove" size={26} color="white" />
+               </MainButton>
+               <Card style={styles.numberContainer}>
+                  <TitleText>Your opponent's guess:</TitleText>
+                  <NumberContainer>{currGuess}</NumberContainer>
+               </Card>
+               <MainButton onPress={() => generateNextGuess('greater')}>
+                  <Ionicons name="md-add" size={26} color="white" />
+               </MainButton>
+            </View>
+            <View style={styles.listContainer}>
+               <ScrollView contentContainerStyle={styles.list}>
+                  {pastGuesses.map((guess, index) =>
+                     generateItem(guess, pastGuesses.length - index))}
+               </ScrollView>
+            </View>
+         </View>
+      );
+   }
 
    return (
       <View style={styles.screen}>
