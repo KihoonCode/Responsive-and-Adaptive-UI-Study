@@ -30,6 +30,7 @@ const StartGameScreen = props => {
    // whether user's chosen input is valid
    const [confirmed, setConfirmed] = useState(false);
 
+   // Current button size
    const [buttonSize, setButtonSize] = useState(Dimensions.get('window').width / 4);
 
    useEffect(() => {
