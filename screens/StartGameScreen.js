@@ -30,7 +30,7 @@ const StartGameScreen = props => {
    // whether user's chosen input is valid
    const [confirmed, setConfirmed] = useState(false);
 
-   // Current button size based on orientation
+   // Current button size based on orientation of screen.
    const [buttonSize, setButtonSize] = useState(Dimensions.get('window').width / 4);
 
    useEffect(() => {
